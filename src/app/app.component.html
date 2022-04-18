@@ -1,0 +1,80 @@
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototipo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#" (click)="unshowProducts()">Logo</a>
+      <form class="d-flex">
+        <input name="filtro" class="form-control me-2" type="text" placeholder="Search" aria-label="Search"
+          [(ngModel)]="input_value" (ngModelChange)="changeFunc();unshowProducts();">
+        <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+      </form>
+    </div>
+  </nav>
+
+
+  <content *ngIf="showProducts==false" id="content">
+    <div *ngFor="let product of toShowProducto" class="card border-dark mb-3 bg-light" style="width: 18rem;">
+      <img class="card-img-top" src='{{"../../assets/images/"+product.id+".jpg"}}' alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+
+        <div class="btn btn-primary bg-dark" (click)="showProduct(product.id)">Ver Detalle</div>
+      </div>
+    </div>
+  </content>
+
+  <div *ngIf="showProducts==true" style="width: 100%;">
+    <div id="d_cab">
+      <img id="d_img" src='{{"../../assets/images/"+PRODUCTOS[selectedProduct].id+".jpg"}}' alt="">
+
+      <div id="desc">
+        <h1 class="h1">{{PRODUCTOS[selectedProduct].name}}</h1>
+        <p>Precio general: {{PRODUCTOS[selectedProduct].precio_promedio}}</p>
+        <p>Mínimo histórico:{{PRODUCTOS[selectedProduct].minimo_historico}}</p>
+      </div>
+    </div>
+
+
+    <div style="width: 100%; display: flex; justify-content: center;">
+      <table class="">
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Confianza</th>
+          <th>Envío</th>
+          <th>Tiempo Envío</th>
+          <th>URL</th>
+        </tr>
+
+        <tr *ngFor="let proveedores of PROVEEDORES">
+          <td>{{proveedores.name}}</td>
+          <td>{{getRandomArbitrary(PRODUCTOS[selectedProduct].minimo_historico,
+            PRODUCTOS[selectedProduct].precio_promedio) | currency:'EUR':'symbol':'0.2-2'}} </td>
+
+          <td>{{proveedores.confianza}}</td>
+          <td>{{proveedores.envio}}</td>
+          <td>{{proveedores.tiempo_envio}}</td>
+          <td><a class="btn btn-primary bg-dark" href="{{proveedores.link}}">Ir a la página</a></td>
+        </tr>
+      </table>
+    </div>
+
+
+  </div>
+
+
+
+
+</body>
