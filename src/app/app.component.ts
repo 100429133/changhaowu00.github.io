@@ -15,7 +15,7 @@ export class AppComponent {
   input_value:string='';
   selectedProduct:number=0;
 
-  showProducts:boolean=false;
+  show:string="home";
 
   constructor(private productService: ProductsService ) { }
   
@@ -33,13 +33,20 @@ export class AppComponent {
       subscribe(productos => this.PRODUCTOS = productos)
   }
 
+
+
   showProduct(id:number):void{
-    this.showProducts=true;
+    this.show="detail";
     this.selectedProduct = id;
   }
   unshowProducts():void{
-    this.showProducts=false;
-
+    this.show="home";
+  }
+  showLogin():void{
+    this.show="login";
+  }
+  showRegister():void{
+    this.show="register";
   }
 
   changeFunc():void{
